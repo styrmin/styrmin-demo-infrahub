@@ -1,0 +1,6 @@
+---
+schemas:
+  - schemas/
+
+objects:
+  - objects/
