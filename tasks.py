@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import sys
 
+import time
 import httpx
 from invoke import Context, task
 
@@ -13,10 +14,10 @@ MAIN_DIRECTORY_PATH = Path(__file__).parent
 infrahub_address = os.getenv("INFRAHUB_ADDRESS")
 base_compose_cmd: str = "docker compose"
 
-SEMAPHORE_URL = "http://localhost:3000"
+SEMAPHORE_URL = os.getenv("SEMAPHORE_ADDRESS", "http://localhost:3000")
 SEMAPHORE_ADMIN = "admin"
-SEMAPHORE_ADMIN_PASSWORD = "changeme"  # noqa: S105
-SEMAPHORE_PLAYBOOK_PATH = "/opt/semaphore/playbooks"
+SEMAPHORE_ADMIN_PASSWORD = "admin-password"
+# SEMAPHORE_PLAYBOOK_PATH = "/opt/semaphore/playbooks"
 
 
 class _SemaphoreClient:
@@ -74,7 +75,7 @@ def init_semaphore(
     url: str = SEMAPHORE_URL,
     admin: str = SEMAPHORE_ADMIN,
     password: str = SEMAPHORE_ADMIN_PASSWORD,
-    playbook_path: str = SEMAPHORE_PLAYBOOK_PATH,
+    # playbook_path: str = SEMAPHORE_PLAYBOOK_PATH,
 ) -> None:
     """Seed Semaphore with the project, repository, inventory, and task template.
 
@@ -90,8 +91,8 @@ def init_semaphore(
     project_id = api.find_or_create(
         "/api/projects",
         "/api/projects",
-        "Service Catalog",
-        {"name": "Service Catalog", "alert": False, "max_parallel_tasks": 0},
+        "Styrmin Demo",
+        {"name": "Styrmin Demo", "alert": False, "max_parallel_tasks": 0},
     )
 
     print("Key store...")
@@ -110,8 +111,8 @@ def init_semaphore(
         {
             "name": "Local",
             "project_id": project_id,
-            "git_url": playbook_path,
-            "git_branch": "",
+            "git_url": "https://github.com/styrmin/styrmin-demo-infrahub",
+            "git_branch": "main",
             "ssh_key_id": key_id,
         },
     )
@@ -124,7 +125,7 @@ def init_semaphore(
         {
             "name": "Infrahub",
             "project_id": project_id,
-            "inventory": "inventory/infrahub_inv.yml",
+            "inventory": "ansible/inventory.yml",
             "type": "file",
             "ssh_key_id": key_id,
         },
@@ -149,7 +150,7 @@ def init_semaphore(
             "repository_id": repo_id,
             "inventory_id": inv_id,
             "environment_id": env_id,
-            "playbook": "deploy.yml",
+            "playbook": "ansible/deploy.yml",
             "type": "task",
             "app": "ansible",
         },

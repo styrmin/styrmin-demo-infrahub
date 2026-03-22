@@ -5,21 +5,20 @@
   gather_facts: false
 
   tasks:
-    # - name: "{{ inventory_hostname }} — Connecting to device"
-    #   ansible.builtin.debug:
-    #     msg: |
-    #       ──────────────────────────────────────────────────────────────
-    #       Connecting to {{ inventory_hostname }} ({{ platform | default('generic') }})
-    #       Role: {{ role | default('unknown') }} | Status: {{ status | default('unknown') }}
-    #       ──────────────────────────────────────────────────────────────
+    - name: "{{ inventory_hostname }} — Connecting to device"
+      ansible.builtin.debug:
+        msg: |
+          ──────────────────────────────────────────────────────────────
+          Connecting to {{ inventory_hostname }} | Role: {{ role | default('unknown') }} | Status: {{ status | default('unknown') }}
+          ──────────────────────────────────────────────────────────────
 
-    - name: "Fetch configuration artifact from Infrahub"
-      opsmill.infrahub.artifact_fetch:
-        artifact_name: "startup-config"
-        target_id: "{{ id }}"
-      register: artifact
+    # - name: "Fetch configuration artifact from Infrahub"
+    #   opsmill.infrahub.artifact_fetch:
+    #     artifact_name: "startup-config"
+    #     target_id: "{{ id }}"
+    #   register: artifact
 
-    - name: Save configs to localhost
-      ansible.builtin.copy:
-        content: "{{ artifact.text }}"
-        dest: "/tmp/{{ inventory_hostname }}_startup_config.txt"
+    # - name: Save configs to localhost
+    #   ansible.builtin.copy:
+    #     content: "{{ artifact.text }}"
+    #     dest: "/tmp/{{ inventory_hostname }}_startup_config.txt"
