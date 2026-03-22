@@ -1,0 +1,17 @@
+---
+- name: Fetch Infrahub API info
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  tasks:
+    - name: Get Infrahub API info
+      ansible.builtin.uri:
+        url: "http://infrahub:8000/api/info"
+        method: GET
+        return_content: true
+      register: infrahub_info
+
+    - name: Display Infrahub API info
+      ansible.builtin.debug:
+        var: infrahub_info.json
