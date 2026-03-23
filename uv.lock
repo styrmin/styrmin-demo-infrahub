@@ -179,6 +179,17 @@ wheels = [
 ]
 
 [[package]]
+name = "cli"
+version = "0.1.0"
+source = { git = "ssh://git@github.com/opsmill/styrmin.git?subdirectory=cli&branch=dga-cli-rich#715fab24c162a7bd5ef2f8db87693f2d65120931" }
+dependencies = [
+    { name = "pydantic-settings" },
+    { name = "rich" },
+    { name = "styrmin-sdk" },
+    { name = "typer" },
+]
+
+[[package]]
 name = "click"
 version = "8.1.8"
 source = { registry = "https://pypi.org/simple" }
@@ -935,8 +946,10 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "ansible-core" },
+    { name = "cli" },
     { name = "httpx" },
     { name = "infrahub-sdk", extra = ["all"] },
+    { name = "styrmin-sdk" },
 ]
 
 [package.dev-dependencies]
@@ -948,14 +961,25 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "ansible-core", specifier = ">=2.20.3" },
+    { name = "cli", git = "ssh://git@github.com/opsmill/styrmin.git?subdirectory=cli&branch=dga-cli-rich" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "infrahub-sdk", extras = ["all"], specifier = ">=1.19.0" },
+    { name = "styrmin-sdk", git = "ssh://git@github.com/opsmill/styrmin.git?subdirectory=python_sdk&branch=dga-cli-rich" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "invoke", specifier = ">=2.2.1" },
     { name = "rumdl", specifier = ">=0.1.57" },
+]
+
+[[package]]
+name = "styrmin-sdk"
+version = "0.1.0"
+source = { git = "ssh://git@github.com/opsmill/styrmin.git?subdirectory=python_sdk&branch=dga-cli-rich#715fab24c162a7bd5ef2f8db87693f2d65120931" }
+dependencies = [
+    { name = "httpx" },
+    { name = "pydantic" },
 ]
 
 [[package]]
@@ -969,7 +993,7 @@ wheels = [
 
 [[package]]
 name = "typer"
-version = "0.23.1"
+version = "0.21.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "annotated-doc" },
@@ -977,9 +1001,9 @@ dependencies = [
     { name = "rich" },
     { name = "shellingham" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fd/07/b822e1b307d40e263e8253d2384cf98c51aa2368cc7ba9a07e523a1d964b/typer-0.23.1.tar.gz", hash = "sha256:2070374e4d31c83e7b61362fd859aa683576432fd5b026b060ad6b4cd3b86134", size = 120047, upload-time = "2026-02-13T10:04:30.984Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f2/1e/a27cc02a0cd715118c71fa2aef2c687fdefc3c28d90fd0dd789c5118154c/typer-0.21.2.tar.gz", hash = "sha256:1abd95a3b675e17ff61b0838ac637fe9478d446d62ad17fa4bb81ea57cc54028", size = 120426, upload-time = "2026-02-10T19:33:46.182Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d5/91/9b286ab899c008c2cb05e8be99814807e7fbbd33f0c0c960470826e5ac82/typer-0.23.1-py3-none-any.whl", hash = "sha256:3291ad0d3c701cbf522012faccfbb29352ff16ad262db2139e6b01f15781f14e", size = 56813, upload-time = "2026-02-13T10:04:32.008Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/cc/d59f893fbdfb5f58770c05febfc4086a46875f1084453621c35605cec946/typer-0.21.2-py3-none-any.whl", hash = "sha256:c3d8de54d00347ef90b82131ca946274f017cffb46683ae3883c360fa958f55c", size = 56728, upload-time = "2026-02-10T19:33:48.01Z" },
 ]
 
 [[package]]

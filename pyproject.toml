@@ -6,8 +6,10 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "ansible-core>=2.20.3",
+    "cli",
     "httpx>=0.28.1",
     "infrahub-sdk[all]>=1.19.0",
+    "styrmin-sdk",
 ]
 
 [dependency-groups]
@@ -15,3 +17,7 @@ dev = [
     "invoke>=2.2.1",
     "rumdl>=0.1.57",
 ]
+
+[tool.uv.sources]
+styrmin-sdk = { git = "ssh://git@github.com/opsmill/styrmin.git", subdirectory = "python_sdk", branch = "dga-cli-rich" }
+cli = { git = "ssh://git@github.com/opsmill/styrmin.git", subdirectory = "cli", branch = "dga-cli-rich" }
