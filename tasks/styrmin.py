@@ -12,6 +12,7 @@ DO_REGION = os.getenv("DO_REGION")
 ACCESS_KEY_ID=os.getenv("ACCESS_KEY_ID")
 SECRET_ACCESS_KEY=os.getenv("SECRET_ACCESS_KEY")
 DO_APPS_LB_ID = os.getenv("DO_APPS_LB_ID")
+DO_S3_BACKUP_NAME = os.getenv("DO_S3_BACKUP_NAME", f"{DO_PREFIX}styrmin-backup")
 STYRMIN_SERVER_ADDRESS = os.getenv("STYRMIN_SERVER_ADDRESS", "")
 
 STYRMIN_CLUSTER_NAME = os.getenv("STYRMIN_CLUSTER_NAME", "demo")
@@ -110,7 +111,7 @@ def init_styrmin(
         command = f"""
         uv run styrminctl backup-locations create do-spaces \
             --endpoint https://{DO_REGION}.digitaloceanspaces.com \
-            --bucket {DO_PREFIX}styrmin-velero \
+            --bucket {DO_S3_BACKUP_NAME} \
             --region {DO_REGION} \
             --access-key-id {ACCESS_KEY_ID} \
             --secret-access-key {SECRET_ACCESS_KEY}

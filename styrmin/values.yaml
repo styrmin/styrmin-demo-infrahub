@@ -12,7 +12,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: traefik
   hosts:
-    - host: demo.styrmin.app
+    - host: dga-demo-ams3.styrmin.app
       paths:
         - path: /
           pathType: Prefix
