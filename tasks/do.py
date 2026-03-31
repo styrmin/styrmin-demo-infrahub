@@ -16,7 +16,6 @@ def create_cluster(context: Context) -> None:
     command1 = f"""
     doctl kubernetes cluster create {DO_PREFIX}styrmin-demo \
         --region {DO_REGION} \
-        --version 1.35.1-do.0 \
         --node-pool "name=worker-pool;size={DO_INSTANCE_SIZE};count=2"
     """
     context.run(command1, pty=True)

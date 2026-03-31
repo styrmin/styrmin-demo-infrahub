@@ -131,3 +131,26 @@ def init_styrmin(
         """
         context.run(command, pty=True)
         print(f"{PREFIX} Backup storage location 'do-spaces' assigned to environment {STYRMIN_ENV_NAME!r}")
+
+
+@task(name="environment-create")
+def environment_create(
+    context: Context,
+    environment_name: str,
+) -> None:
+
+    cluster_id = get_cluster_id(STYRMIN_CLUSTER_NAME)
+
+    # --- Environment ---
+    try:
+        environment_id = get_environment_id(environment_name)
+        print(f"Environment {environment_name!r} already exists (id: {environment_id})")
+    except ValueError:
+        print(f"Creating environment {environment_name!r}...")
+        command = """
+        uv run styrminctl environments create %s %s \
+        -c '{"ip_whitelist": ["0.0.0.0/0"], "dedicated_ingress": {"service": {"annotations": {"kubernetes.digitalocean.com/load-balancer-id": "%s"}}}}'
+        """ % (environment_name, cluster_id, DO_APPS_LB_ID)
+        context.run(command, pty=True)
+        environment_id = get_environment_id(environment_name)
+        print(f"Environment {environment_name!r} created (id: {environment_id})")
